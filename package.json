@@ -10,11 +10,23 @@
     "type": "git",
     "url": "git+https://github.com/Pet-Life/petlife-plataform-api.git"
   },
-  "keywords": ["Node.js", "Express", "API", "Sequelize", "E-Commerce", "Pets"], 
+  "keywords": [
+    "Node.js",
+    "Express",
+    "API",
+    "Sequelize",
+    "E-Commerce",
+    "Pets"
+  ],
   "author": "Petlife <petlife.dev@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Pet-Life/petlife-plataform-api/issues"
   },
-  "homepage": "https://github.com/Pet-Life/petlife-plataform-api#readme"
+  "homepage": "https://github.com/Pet-Life/petlife-plataform-api#readme",
+  "devDependencies": {
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
+    "prettier": "2.0.2"
+  }
 }

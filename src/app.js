@@ -1,6 +1,9 @@
 const express = require('express');
 const db = require('./database');
 
+// imports routes
+const indexRouter = require('./routes/index');
+
 const app = express();
 
 db.sequelize
@@ -16,8 +19,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.use('/api', (req, res) =>
-  res.json({ success: true, message: 'Hello World' })
-);
+app.use('/api', indexRouter);
 
 module.exports = app;

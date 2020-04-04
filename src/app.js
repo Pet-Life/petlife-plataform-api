@@ -24,6 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
 // routes
-app.use('/api', indexRouter);
+app.use('/api/v1', indexRouter);
 
 module.exports = app;

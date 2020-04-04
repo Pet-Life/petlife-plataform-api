@@ -1,4 +1,7 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const db = require('./database');
 
 // imports routes
@@ -15,8 +18,10 @@ db.sequelize
     console.error('Unable to connect to the database: ', err);
   });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('dev'));
 
 // routes
 app.use('/api', indexRouter);

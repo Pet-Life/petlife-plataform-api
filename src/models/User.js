@@ -14,9 +14,10 @@ class User extends Model {
       {
         hooks: {
           beforeCreate: (user) => {
-            const salt = bcrypt.genSaltSync();
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(user.password, salt);
             // eslint-disable-next-line no-param-reassign
-            user.password = bcrypt.hashSync(user.password, salt);
+            user.password = hash;
           },
         },
         sequelize,

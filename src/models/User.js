@@ -5,19 +5,23 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        first_name: DataTypes.STRING,
-        last_name: DataTypes.STRING,
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
-        permission_level: DataTypes.INTEGER,
+        permissionLevel: DataTypes.INTEGER,
       },
       {
         hooks: {
           beforeCreate: (user) => {
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(user.password, salt);
-            // eslint-disable-next-line no-param-reassign
-            user.password = hash;
+            return bcrypt
+              .hash(user.password, bcrypt.genSaltSync(10))
+              .then((hash) => {
+                user.password = hash;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           },
         },
         sequelize,

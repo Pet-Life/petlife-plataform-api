@@ -7,11 +7,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      first_name: {
+      firstName: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      last_name: {
+      lastName: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -24,15 +24,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      permission_level: {
+      permissionLevel: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },

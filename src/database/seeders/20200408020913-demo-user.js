@@ -4,11 +4,11 @@ module.exports = {
       'users',
       [
         {
-          first_name: 'admin',
-          last_name: 'admin',
+          firstName: 'admin',
+          lastName: 'admin',
           email: 'admin@gmail.com',
           password: 'admin',
-          permission_level: 1,
+          permissionLevel: 1,
           created_at: new Date(),
           updated_at: new Date(),
         },

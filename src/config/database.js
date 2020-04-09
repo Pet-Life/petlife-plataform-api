@@ -11,8 +11,6 @@ module.exports = {
     dialect: process.env.DB_DIALECT,
     define: {
       timestamps: true,
-      underscored: true,
-      underscoredAll: true,
     },
   },
 };

@@ -5,11 +5,46 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
-        email: DataTypes.STRING,
-        password: DataTypes.STRING,
-        permissionLevel: DataTypes.INTEGER,
+        firstName: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
+        lastName: {
+          type: DataTypes.STRING,
+          notEmpty: {
+            msg: 'this field cannot be empty',
+          },
+        },
+        email: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+            isEmail: {
+              msg: 'enter a valid email',
+            },
+          },
+        },
+        password: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+            len: [8, 16],
+          },
+        },
+        permissionLevel: {
+          type: DataTypes.INTEGER,
+          notEmpty: {
+            msg: 'this field cannot be empty',
+          },
+        },
       },
       {
         hooks: {

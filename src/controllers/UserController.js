@@ -19,12 +19,25 @@ class UserController {
           .json({ success: true, message: 'created new user', user });
       })
       .catch((err) => {
-        res.status(200).json({
+        return res.status(200).json({
+          success: false,
+          message: 'E-mail already registered',
+          error: err,
+        });
+      })
+      .catch((err) => {
+        return res.status(200).json({
           success: false,
           message: 'error create new user',
-          error: 'email already register',
+          error: err,
         });
-        console.log(err);
+      })
+      .catch((err) => {
+        return res.status(400).json({
+          success: false,
+          message: 'the fields cannot be empty',
+          error: err,
+        });
       });
   }
 }

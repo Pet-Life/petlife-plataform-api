@@ -2,14 +2,14 @@ const User = require('../models/User');
 
 class UserController {
   static async create(req, res) {
-    const { firstName, lastName, email, password, permissionLevel } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     await User.create({
       firstName,
       lastName,
       email,
       password,
-      permissionLevel,
+      permissionLevel: 1,
     })
       .then((user) => {
         user.password = undefined;

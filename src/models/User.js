@@ -36,7 +36,10 @@ class User extends Model {
             notEmpty: {
               msg: 'this field cannot be empty',
             },
-            len: [8, 16],
+            len: {
+              arg: [8, 16],
+              msg: 'the field must be 8 to 16 characters',
+            },
           },
         },
         permissionLevel: {
@@ -60,9 +63,13 @@ class User extends Model {
           },
         },
         sequelize,
-        modelName: 'users',
+        modelName: 'user',
       }
     );
+  }
+
+  static associate(models) {
+    this.hasOne(models.consumer, { foreignKey: 'userId', as: 'user' });
   }
 }
 

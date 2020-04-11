@@ -35,14 +35,6 @@ class Consumer extends Model {
         },
       },
       {
-        getterMethods: {
-          formatCpf() {
-            return this.cpf.replace(
-              /(\d{3})(\d{3})(\d{3})(\d{2})/g,
-              '$1.$2.$3-$4'
-            );
-          },
-        },
         sequelize,
         modelName: 'consumer',
       }

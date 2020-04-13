@@ -1,6 +1,24 @@
 const Consumer = require('../models/Consumer');
 
 class ConsumerController {
+  async getAll(req, res) {
+    await Consumer.findAll()
+      .then((consumer) => {
+        return res.status(200).json({
+          success: true,
+          message: 'list of all consumers',
+          consumers: consumer,
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          success: false,
+          message: 'error loading consumers',
+          error: err,
+        });
+      });
+  }
+
   async create(req, res) {
     const { firstName, lastName, email, password } = req.body;
     await Consumer.create({
@@ -23,14 +41,6 @@ class ConsumerController {
         });
       })
       .catch((err) => {
-        console.log(err);
-        return res.status(500).json({
-          success: false,
-          message: 'error create new consumer',
-          error: err,
-        });
-      })
-      .catch((err) => {
         return res.status(200).json({
           success: false,
           message: 'E-mail already registered',
@@ -48,6 +58,14 @@ class ConsumerController {
         return res.status(400).json({
           success: false,
           message: 'the fields cannot be empty',
+          error: err,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+          success: false,
+          message: 'error create new consumer',
           error: err,
         });
       });

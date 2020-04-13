@@ -7,6 +7,27 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      firstName: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      lastName: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      email: {
+        allowNull: true,
+        unique: true,
+        type: Sequelize.STRING,
+      },
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      permissionLevel: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       avatar: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -18,16 +39,6 @@ module.exports = {
       phone: {
         allowNull: false,
         type: Sequelize.STRING,
-      },
-      userId: {
-        allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

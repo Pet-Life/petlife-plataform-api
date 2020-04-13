@@ -5,7 +5,6 @@ const config = require('../config/database')[env];
 
 const db = {};
 
-const User = require('../models/User');
 const Consumer = require('../models/Consumer');
 
 let sequelize;
@@ -20,11 +19,7 @@ if (config.use_env_variable) {
   );
 }
 
-User.init(sequelize);
 Consumer.init(sequelize);
-
-User.associate(sequelize.models);
-Consumer.associate(sequelize.models);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

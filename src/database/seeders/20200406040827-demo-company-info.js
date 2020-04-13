@@ -1,13 +1,13 @@
 module.exports = {
   up: (queryInterface) => {
     return queryInterface.bulkInsert(
-      'company_info',
+      'company',
       [
         {
           name_company: 'Petlife',
           description: 'Petlife é uma plataforma de e-commerce para Pet Shop',
-          created_at: new Date(),
-          updated_at: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}
@@ -15,6 +15,6 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.bulkDelete('company_info', null, {});
+    return queryInterface.bulkDelete('company', null, {});
   },
 };

@@ -8,6 +8,7 @@ const db = require('./database');
 // imports routes
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
+const paymentRouter = require('./routes/payments');
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use(morgan('dev'));
 // routes
 app.use('/api/v1', indexRouter);
 app.use('/api/v1', userRouter);
+app.use('/api/v1', paymentRouter);
 
 module.exports = app;

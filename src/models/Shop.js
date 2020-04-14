@@ -80,7 +80,6 @@ class Shop extends Model {
         },
         deliveryType: {
           type: DataTypes.ARRAY(DataTypes.STRING),
-          values: ['entrega', 'retirada'],
           validate: {
             notEmpty: {
               msg: 'this field cannot be empty',
@@ -88,7 +87,7 @@ class Shop extends Model {
           },
         },
         businessHours: {
-          type: DataTypes.ARRAY(DataTypes.STRING),
+          type: DataTypes.ARRAY(DataTypes.TEXT),
           validate: {
             notEmpty: {
               msg: 'this field cannot be empty',
@@ -97,7 +96,6 @@ class Shop extends Model {
         },
         status: {
           type: DataTypes.STRING,
-          values: ['ativo', 'desativado'],
           defaultValue: 'ativo',
           validate: {
             notEmpty: {

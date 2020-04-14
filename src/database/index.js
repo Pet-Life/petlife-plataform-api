@@ -7,6 +7,7 @@ const db = {};
 
 const Consumer = require('../models/Consumer');
 const Shop = require('../models/Shop');
+const Payment = require('../models/Payment');
 
 let sequelize;
 if (config.use_env_variable) {
@@ -22,6 +23,7 @@ if (config.use_env_variable) {
 
 Consumer.init(sequelize);
 Shop.init(sequelize);
+Payment.init(sequelize);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

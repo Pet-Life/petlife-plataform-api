@@ -30,6 +30,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       coordinates: {
+        allowNull: false,
         type: Sequelize.ARRAY(Sequelize.REAL),
       },
       consumerId: {
@@ -37,6 +38,8 @@ module.exports = {
           model: 'consumer',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         type: Sequelize.INTEGER,
       },
       createdAt: {

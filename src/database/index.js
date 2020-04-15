@@ -9,6 +9,7 @@ const Consumer = require('../models/Consumer');
 const Shop = require('../models/Shop');
 const Payment = require('../models/Payment');
 const Category = require('../models/Category');
+const Address = require('../models/Address');
 
 let sequelize;
 if (config.use_env_variable) {
@@ -23,9 +24,14 @@ if (config.use_env_variable) {
 }
 
 Consumer.init(sequelize);
+Address.init(sequelize);
 Shop.init(sequelize);
 Payment.init(sequelize);
 Category.init(sequelize);
+
+// association
+Consumer.associate(sequelize.models);
+Address.associate(sequelize.models);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

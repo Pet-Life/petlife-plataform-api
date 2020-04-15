@@ -99,6 +99,13 @@ class Consumer extends Model {
       }
     );
   }
+
+  static associate(models) {
+    Consumer.hasMany(models.address, {
+      foreignKey: 'consumerId',
+      as: 'adresses',
+    });
+  }
 }
 
 module.exports = Consumer;

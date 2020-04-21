@@ -30,22 +30,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      categoryId: {
-        allowNull: false,
-        references: {
-          model: 'category',
-          key: 'id',
-        },
-        type: Sequelize.INTEGER,
-      },
-      shopId: {
-        allowNull: false,
-        references: {
-          model: 'shop',
-          key: 'id',
-        },
-        type: Sequelize.INTEGER,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

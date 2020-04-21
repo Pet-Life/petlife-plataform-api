@@ -1,6 +1,11 @@
+const dotenv = require('dotenv');
 const Consumer = require('../models/Consumer');
 const Address = require('../models/Address');
 const apiTomTom = require('../services/tomtom/api');
+
+dotenv.config();
+
+const { KEY_API_TOMTOM } = process.env;
 
 class AddressController {
   async getById(req, res) {
@@ -36,7 +41,7 @@ class AddressController {
     const { zipcode, number } = req.body;
 
     const response = await apiTomTom.get(
-      `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&extendedPostalCodesFor=PAD&key=9jU6WguAUJrkr7wAeDNyb1UMzjwcDrZt`
+      `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&extendedPostalCodesFor=PAD&key=${KEY_API_TOMTOM}`
     );
 
     const [{ address, position }] = response.data.results;

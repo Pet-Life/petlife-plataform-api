@@ -101,10 +101,7 @@ class Consumer extends Model {
   }
 
   static associate(models) {
-    Consumer.hasMany(models.address, {
-      foreignKey: 'consumerId',
-      as: 'adresses',
-    });
+    this.hasMany(models.adresses, { foreignKey: 'consumerId', as: 'adresses' });
   }
 }
 

@@ -8,6 +8,7 @@ const db = require('./database');
 // imports routes
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
+const addressRouter = require('./routes/adresses');
 const paymentRouter = require('./routes/payments');
 const categoryRouter = require('./routes/categories');
 
@@ -30,6 +31,7 @@ app.use(morgan('dev'));
 // routes
 app.use('/api/v1', indexRouter);
 app.use('/api/v1', userRouter);
+app.use('/api/v1', addressRouter);
 app.use('/api/v1', paymentRouter);
 app.use('/api/v1', categoryRouter);
 

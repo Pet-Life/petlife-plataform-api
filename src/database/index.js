@@ -23,6 +23,7 @@ if (config.use_env_variable) {
   );
 }
 
+// models init
 Consumer.init(sequelize);
 Address.init(sequelize);
 Shop.init(sequelize);

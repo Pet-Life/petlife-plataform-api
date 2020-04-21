@@ -4,15 +4,15 @@ class Address extends Model {
   static init(sequelize) {
     super.init(
       {
-        zicode: {
-          type: DataTypes.INTEGER,
+        zipcode: {
+          type: DataTypes.STRING,
           validate: {
             notEmpty: {
               msg: 'this field cannot be empty',
             },
           },
         },
-        address: {
+        street: {
           type: DataTypes.STRING,
           validate: {
             notEmpty: {
@@ -22,6 +22,14 @@ class Address extends Model {
         },
         number: {
           type: DataTypes.INTEGER,
+        },
+        district: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
         },
         complement: {
           type: DataTypes.STRING,
@@ -53,7 +61,7 @@ class Address extends Model {
       },
       {
         sequelize,
-        modelName: 'address',
+        modelName: 'adresses',
       }
     );
   }
@@ -61,7 +69,7 @@ class Address extends Model {
   static associate(models) {
     Address.belongsTo(models.consumer, {
       foreignKey: 'consumerId',
-      as: 'user',
+      as: 'adresses',
     });
   }
 }

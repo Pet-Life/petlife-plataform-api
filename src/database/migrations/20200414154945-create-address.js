@@ -9,14 +9,18 @@ module.exports = {
       },
       zipcode: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
-      address: {
+      street: {
         allowNull: false,
         type: Sequelize.STRING,
       },
       number: {
         type: Sequelize.INTEGER,
+      },
+      district: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       complement: {
         type: Sequelize.STRING,
@@ -35,7 +39,7 @@ module.exports = {
       },
       consumerId: {
         references: {
-          model: 'consumer',
+          model: 'consumers',
           key: 'id',
         },
         onUpdate: 'CASCADE',

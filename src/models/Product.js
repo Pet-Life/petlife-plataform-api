@@ -6,6 +6,10 @@ class Product extends Model {
       {
         photo: {
           type: DataTypes.STRING,
+          get() {
+            const name = this.getDataValue('photo');
+            return `http://127.0.0.1:5000/files/${name}`;
+          },
         },
         name: {
           type: DataTypes.STRING,
@@ -39,12 +43,27 @@ class Product extends Model {
             },
           },
         },
+        status: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
       },
       {
         sequelize,
         modelName: 'product',
       }
     );
+  }
+
+  static associate(models) {
+    Product.belongsTo(models.shop, {
+      foreignKey: 'shopId',
+      as: 'products',
+    });
   }
 }
 

@@ -30,6 +30,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      shopId: {
+        allowNull: false,
+        references: {
+          model: 'shops',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -11,6 +11,7 @@ const userRouter = require('./routes/users');
 const addressRouter = require('./routes/adresses');
 const paymentRouter = require('./routes/payments');
 const categoryRouter = require('./routes/categories');
+const productRouter = require('./routes/products');
 
 const app = express();
 
@@ -34,5 +35,6 @@ app.use('/api/v1', userRouter);
 app.use('/api/v1', addressRouter);
 app.use('/api/v1', paymentRouter);
 app.use('/api/v1', categoryRouter);
+app.use('/api/v1', productRouter);
 
 module.exports = app;

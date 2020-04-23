@@ -122,6 +122,10 @@ class Shop extends Model {
       }
     );
   }
+
+  static associate(models) {
+    this.hasMany(models.product, { foreignKey: 'shopId', as: 'products' });
+  }
 }
 
 module.exports = Shop;

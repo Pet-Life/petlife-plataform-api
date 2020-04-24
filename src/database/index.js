@@ -37,6 +37,7 @@ Consumer.associate(sequelize.models);
 Address.associate(sequelize.models);
 Shop.associate(sequelize.models);
 Product.associate(sequelize.models);
+Category.associate(sequelize.models);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

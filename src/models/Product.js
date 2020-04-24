@@ -64,6 +64,10 @@ class Product extends Model {
       foreignKey: 'shopId',
       as: 'products',
     });
+    Product.hasOne(models.category, {
+      foreignKey: 'categoryId',
+      as: 'categories',
+    });
   }
 }
 

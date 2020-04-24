@@ -125,6 +125,7 @@ class Shop extends Model {
 
   static associate(models) {
     this.hasMany(models.product, { foreignKey: 'shopId', as: 'products' });
+    this.hasOne(models.sale, { foreignKey: 'shopId', as: 'shops' });
   }
 }
 

@@ -19,6 +19,10 @@ class Payment extends Model {
       }
     );
   }
+
+  static associate(models) {
+    this.hasOne(models.sale, { foreignKey: 'paymentId', as: 'payments' });
+  }
 }
 
 module.exports = Payment;

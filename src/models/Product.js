@@ -60,14 +60,15 @@ class Product extends Model {
   }
 
   static associate(models) {
-    Product.belongsTo(models.shop, {
+    this.belongsTo(models.shop, {
       foreignKey: 'shopId',
       as: 'products',
     });
-    Product.hasOne(models.category, {
+    this.belongsTo(models.category, {
       foreignKey: 'categoryId',
       as: 'categories',
     });
+    this.hasOne(models.sale, { foreignKey: 'productId', as: 'sales' });
   }
 }
 

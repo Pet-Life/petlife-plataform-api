@@ -19,6 +19,13 @@ class Category extends Model {
       }
     );
   }
+
+  static associate(models) {
+    Category.hasOne(models.product, {
+      foreignKey: 'categoryId',
+      as: 'categories',
+    });
+  }
 }
 
 module.exports = Category;

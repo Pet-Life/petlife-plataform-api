@@ -4,7 +4,14 @@ const Shop = require('../models/Shop');
 class ProductController {
   async create(req, res) {
     const { filename } = req.file;
-    const { name, manufacturer, unityPrice, quantity, status } = req.body;
+    const {
+      name,
+      manufacturer,
+      unityPrice,
+      quantity,
+      categoryId,
+      status,
+    } = req.body;
     const { id } = req.headers;
 
     const shop = await Shop.findByPk(id);
@@ -21,6 +28,7 @@ class ProductController {
       manufacturer,
       unityPrice,
       quantity,
+      categoryId,
       status,
       shopId: id,
     });

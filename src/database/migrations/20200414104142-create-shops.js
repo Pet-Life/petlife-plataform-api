@@ -48,6 +48,29 @@ module.exports = {
         allowNull: false,
         type: Sequelize.ARRAY(Sequelize.TEXT),
       },
+      street: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      number: {
+        type: Sequelize.INTEGER,
+      },
+      district: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      city: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      state: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      coordinates: {
+        allowNull: false,
+        type: Sequelize.ARRAY(Sequelize.REAL),
+      },
       status: {
         allowNull: false,
         type: Sequelize.STRING,

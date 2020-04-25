@@ -94,6 +94,49 @@ class Shop extends Model {
             },
           },
         },
+        street: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
+        number: {
+          type: DataTypes.INTEGER,
+        },
+        district: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
+        city: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
+        state: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
+        coordinates: {
+          type: DataTypes.ARRAY(DataTypes.REAL),
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
         status: {
           type: DataTypes.STRING,
           defaultValue: 'ativo',

@@ -5,29 +5,6 @@ const Shop = require('../models/Shop');
 const Consumer = require('../models/Consumer');
 
 class SaleController {
-  async getAll(req, res) {
-    await Sale.findAll({
-      include: [
-        { association: { as: 'products' } },
-        { association: { as: 'shops' } },
-        { association: { as: 'consumers' } },
-        { association: { as: 'payments' } },
-      ],
-    })
-      .then((sale) => {
-        return res
-          .status(200)
-          .json({ success: true, message: 'list of sales', sales: sale });
-      })
-      .catch((err) => {
-        return res.status({
-          success: false,
-          message: 'error loading list of sales',
-          error: err,
-        });
-      });
-  }
-
   async create(req, res) {
     const { productId, priceTotal, shopId, paymentId } = req.body;
     const { id } = req.headers;

@@ -2,6 +2,19 @@ const Product = require('../models/Product');
 const Shop = require('../models/Shop');
 
 class ProductController {
+  async getAll(req, res) {
+    const products = await Product.findAll({
+      include: [
+        { association: 'categories' },
+        { association: 'products', attributes: { exclude: ['password'] } },
+      ],
+    });
+
+    return res
+      .status(200)
+      .json({ success: true, message: 'list of products', products });
+  }
+
   async create(req, res) {
     const { filename } = req.file;
     const {
@@ -22,16 +35,24 @@ class ProductController {
         .json({ success: false, error: 'shop does not exists' });
     }
 
-    const product = await Product.create({
-      photo: filename,
-      name,
-      manufacturer,
-      unityPrice,
-      quantity,
-      categoryId,
-      status,
-      shopId: id,
-    });
+    const product = await Product.create(
+      {
+        photo: filename,
+        name,
+        manufacturer,
+        unityPrice,
+        quantity,
+        categoryId,
+        status,
+        shopId: id,
+      },
+      {
+        include: [
+          { association: 'categories' },
+          { association: 'products', attributes: { exclude: ['password'] } },
+        ],
+      }
+    );
 
     return res
       .status(201)

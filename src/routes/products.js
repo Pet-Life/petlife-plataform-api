@@ -6,6 +6,7 @@ const uploadConfig = require('../config/upload');
 const router = express.Router();
 const upload = multer(uploadConfig);
 
+router.get('/products', ProductController.getAll);
 router.post('/products', upload.single('photo'), ProductController.create);
 
 module.exports = router;

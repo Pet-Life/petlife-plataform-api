@@ -5,6 +5,35 @@ const Shop = require('../models/Shop');
 const Consumer = require('../models/Consumer');
 
 class SaleController {
+  async getAll(req, res) {
+    const sale = await Sale.findAll({
+      include: [
+        { association: 'products' },
+        { association: 'shops', attributes: { exclude: ['password'] } },
+        { association: 'consumers', attributes: { exclude: ['password'] } },
+        { association: 'payments' },
+      ],
+    });
+
+    try {
+      if (!sale) {
+        return res
+          .status(400)
+          .json({ success: false, error: 'error loading sales' });
+      }
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'list of sales', sales: sale });
+    } catch (err) {
+      return res.status({
+        success: false,
+        message: 'error loading sales',
+        error: err,
+      });
+    }
+  }
+
   async create(req, res) {
     const { productId, priceTotal, shopId, paymentId } = req.body;
     const { id } = req.headers;
@@ -40,11 +69,11 @@ class SaleController {
     }
 
     const sale = await Sale.create({
-      productId,
+      productId: product.id,
       priceTotal,
-      shopId,
+      shopId: shop.id,
       consumerId: consumer.id,
-      paymentId,
+      paymentId: payment.id,
     });
 
     return res

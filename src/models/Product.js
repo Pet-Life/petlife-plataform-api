@@ -68,7 +68,7 @@ class Product extends Model {
       foreignKey: 'categoryId',
       as: 'categories',
     });
-    this.hasOne(models.sale, { foreignKey: 'productId', as: 'products' });
+    this.hasOne(models.sale, { foreignKey: 'productId', as: 'sales' });
   }
 }
 

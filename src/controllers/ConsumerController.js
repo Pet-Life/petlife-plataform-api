@@ -2,7 +2,7 @@ const Consumer = require('../models/Consumer');
 
 class ConsumerController {
   async getAll(req, res) {
-    await Consumer.findAll()
+    await Consumer.findAll({ attributes: { exclude: ['password'] } })
       .then((consumer) => {
         return res.status(200).json({
           success: true,

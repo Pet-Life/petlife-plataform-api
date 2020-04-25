@@ -27,7 +27,7 @@ class SearchController {
           Sequelize.col('coordinates')
         ),
         '<=',
-        10000
+        1000
       ),
     });
 

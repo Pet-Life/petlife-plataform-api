@@ -38,6 +38,8 @@ class ShopController {
       position.lon
     );
 
+    const point = { type: 'Point', coordinates: [position.lat, position.lon] };
+
     await Shop.create({
       firstName,
       lastName,
@@ -54,7 +56,7 @@ class ShopController {
       district: address.municipalitySubdivision,
       city: address.municipality,
       state: address.countrySubdivision,
-      coordinates: [position.lat, position.lon],
+      coordinates: point,
       status: 'ativo',
     })
       .then((shop) => {

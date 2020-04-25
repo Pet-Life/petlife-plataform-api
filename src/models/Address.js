@@ -51,7 +51,7 @@ class Address extends Model {
           },
         },
         coordinates: {
-          type: DataTypes.ARRAY(DataTypes.REAL),
+          type: DataTypes.GEOMETRY('POINT'),
           validate: {
             notEmpty: {
               msg: 'this field cannot be empty',

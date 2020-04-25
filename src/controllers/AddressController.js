@@ -57,6 +57,8 @@ class AddressController {
       position.lon
     );
 
+    const point = { type: 'Point', coordinates: [position.lat, position.lon] };
+
     const consumer = await Consumer.findByPk(id);
 
     if (!consumer) {
@@ -72,7 +74,7 @@ class AddressController {
         district: address.municipalitySubdivision,
         city: address.municipality,
         state: address.countrySubdivision,
-        coordinates: [position.lat, position.lon],
+        coordinates: point,
         consumerId: id,
       });
 

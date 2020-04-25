@@ -35,7 +35,7 @@ module.exports = {
       },
       coordinates: {
         allowNull: false,
-        type: Sequelize.ARRAY(Sequelize.REAL),
+        type: Sequelize.GEOMETRY('POINT'),
       },
       consumerId: {
         references: {

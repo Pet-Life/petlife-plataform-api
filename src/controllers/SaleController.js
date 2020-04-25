@@ -7,6 +7,9 @@ const Consumer = require('../models/Consumer');
 class SaleController {
   async getAll(req, res) {
     const sale = await Sale.findAll({
+      attributes: {
+        exclude: ['productId', 'shopId', 'consumerId', 'paymentId'],
+      },
       include: [
         { association: 'products' },
         { association: 'shops', attributes: { exclude: ['password'] } },

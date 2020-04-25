@@ -6,7 +6,7 @@ class ProductController {
     const products = await Product.findAll({
       include: [
         { association: 'categories' },
-        { association: 'products', attributes: { exclude: ['password'] } },
+        { association: 'shops', attributes: { exclude: ['password'] } },
       ],
     });
 
@@ -49,7 +49,7 @@ class ProductController {
       {
         include: [
           { association: 'categories' },
-          { association: 'products', attributes: { exclude: ['password'] } },
+          { association: 'shops', attributes: { exclude: ['password'] } },
         ],
       }
     );

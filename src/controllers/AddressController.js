@@ -46,17 +46,6 @@ class AddressController {
 
     const [{ address, position }] = response.data.results;
 
-    console.log(
-      address.streetName,
-      number,
-      address.municipalitySubdivision,
-      address.municipality,
-      address.countrySubdivision,
-      zipcode,
-      position.lat,
-      position.lon
-    );
-
     const point = { type: 'Point', coordinates: [position.lat, position.lon] };
 
     const consumer = await Consumer.findByPk(id);

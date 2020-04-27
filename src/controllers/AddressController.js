@@ -80,6 +80,22 @@ class AddressController {
       });
     }
   }
+
+  async findAddress(req, res) {
+    const { zipcode } = req.body;
+
+    const response = await apiTomTom.get(
+      `${zipcode}.json?storeResult=true&typeahead=true&countrySet=BR&language=pt-BR&extendedPostalCodesFor=Addr&view=Unified&key=9jU6WguAUJrkr7wAeDNyb1UMzjwcDrZt`
+    );
+
+    const { results } = response.data;
+
+    return res.status(200).json({
+      success: true,
+      message: 'list of addresses',
+      addresses: results,
+    });
+  }
 }
 
 module.exports = new AddressController();

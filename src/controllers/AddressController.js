@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const Consumer = require('../models/Consumer');
 const Address = require('../models/Address');
 const apiTomTom = require('../services/tomtom/api');
+const apiViaCep = require('../services/viacep/api');
 
 dotenv.config();
 
@@ -41,7 +42,7 @@ class AddressController {
     const { zipcode, number } = req.body;
 
     const response = await apiTomTom.get(
-      `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&extendedPostalCodesFor=PAD&key=${KEY_API_TOMTOM}`
+      `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&key=${KEY_API_TOMTOM}`
     );
 
     const [{ address, position }] = response.data.results;
@@ -83,18 +84,52 @@ class AddressController {
 
   async findAddress(req, res) {
     const { zipcode } = req.body;
+    let address;
 
-    const response = await apiTomTom.get(
-      `${zipcode}.json?storeResult=true&typeahead=true&countrySet=BR&language=pt-BR&extendedPostalCodesFor=Addr&view=Unified&key=9jU6WguAUJrkr7wAeDNyb1UMzjwcDrZt`
-    );
+    await apiViaCep
+      .get(`${zipcode}/json `)
+      .then(async (response) => {
+        const {
+          logradouro,
+          bairro,
+          complemento,
+          localidade,
+          uf,
+        } = response.data;
 
-    const { results } = response.data;
+        await apiTomTom
+          .get(
+            `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&extendedPostalCodesFor=PAD&key=${KEY_API_TOMTOM}`
+          )
+          .then((responseData) => {
+            const [{ position }] = responseData.data.results;
+            address = {
+              address: {
+                street: logradouro,
+                complement: complemento,
+                district: bairro,
+                city: localidade,
+                state: uf,
+              },
+              coordinates: {
+                latitude: position.lat,
+                longitude: position.lon,
+              },
+            };
 
-    return res.status(200).json({
-      success: true,
-      message: 'list of addresses',
-      addresses: results,
-    });
+            return res.status(200).json({
+              success: true,
+              message: 'address',
+              address,
+            });
+          })
+          .catch((err) => {
+            return res.status(400).json({ success: false, error: err });
+          });
+      })
+      .then((err) => {
+        return res.status(500).json({ success: false, error: err });
+      });
   }
 }
 

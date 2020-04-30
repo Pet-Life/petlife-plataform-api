@@ -7,11 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      firstName: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      lastName: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -29,23 +25,18 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       avatar: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       cnpj: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       phone: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       deliveryType: {
-        allowNull: false,
         type: Sequelize.ARRAY(Sequelize.TEXT),
       },
       businessHours: {
-        allowNull: false,
         type: Sequelize.ARRAY(Sequelize.TEXT),
       },
       street: {

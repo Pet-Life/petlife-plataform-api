@@ -9,6 +9,8 @@ router.post('/users/consumers/signup', ConumerController.create);
 router.get('/users/consumers', ConumerController.getAll);
 
 // endpoints shops
+router.get('/users/shops/', ShopController.getById);
+router.post('/users/shops/auth/login', ShopController.login);
 router.post('/users/shops/signup', ShopController.create);
 
 module.exports = router;

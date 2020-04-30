@@ -5,18 +5,12 @@ class Shop extends Model {
   static init(sequelize) {
     super.init(
       {
-        firstName: {
+        name: {
           type: DataTypes.STRING,
           validate: {
             notEmpty: {
               msg: 'this field cannot be empty',
             },
-          },
-        },
-        lastName: {
-          type: DataTypes.STRING,
-          notEmpty: {
-            msg: 'this field cannot be empty',
           },
         },
         email: {
@@ -58,7 +52,6 @@ class Shop extends Model {
               msg: 'this is not a valid url',
             },
           },
-          defaultValue: 'https://i.imgur.com/L1RTiiC.png',
         },
         cnpj: {
           type: DataTypes.STRING,
@@ -67,32 +60,15 @@ class Shop extends Model {
               msg: 'this field cannot be empty',
             },
           },
-          defaultValue: '00.000.000/0000-00',
         },
         phone: {
           type: DataTypes.STRING,
-          validate: {
-            notEmpty: {
-              msg: 'this field cannot be empty',
-            },
-          },
-          defaultValue: '(00) 0000-0000',
         },
         deliveryType: {
           type: DataTypes.ARRAY(DataTypes.STRING),
-          validate: {
-            notEmpty: {
-              msg: 'this field cannot be empty',
-            },
-          },
         },
         businessHours: {
           type: DataTypes.ARRAY(DataTypes.TEXT),
-          validate: {
-            notEmpty: {
-              msg: 'this field cannot be empty',
-            },
-          },
         },
         street: {
           type: DataTypes.STRING,
@@ -160,6 +136,7 @@ class Shop extends Model {
               });
           },
         },
+
         sequelize,
         modelName: 'shop',
       }
@@ -171,5 +148,15 @@ class Shop extends Model {
     this.hasOne(models.sale, { foreignKey: 'shopId', as: 'shops' });
   }
 }
+
+Shop.prototype.validPassword = (password) => {
+  bcrypt.compare(password, this.password, (err, result) => {
+    if (err) {
+      return err;
+    }
+
+    return result;
+  });
+};
 
 module.exports = Shop;

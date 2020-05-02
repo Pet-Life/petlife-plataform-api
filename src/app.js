@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -29,9 +30,10 @@ db.sequelize
 
 app.use(helmet());
 app.use(cors());
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan('dev'));
+app.use('/files', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 // routes
 app.use('/api/v1', indexRouter);

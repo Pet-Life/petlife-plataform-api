@@ -19,6 +19,25 @@ class ConsumerController {
       });
   }
 
+  async getById(req, res) {
+    const { id } = req.params;
+
+    const consumer = await Consumer.findByPk(id, {
+      include: [{ association: 'adresses' }],
+      attributes: { exclude: ['password'] },
+    });
+
+    if (!consumer) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'consumer not found' });
+    }
+
+    return res
+      .status(200)
+      .json({ success: true, message: 'consumer found', consumer });
+  }
+
   async create(req, res) {
     const { firstName, lastName, email, password } = req.body;
     await Consumer.create({
@@ -27,7 +46,7 @@ class ConsumerController {
       email,
       password,
       permissionLevel: 1,
-      avatar: 'https://i.imgur.com/L1RTiiC.png',
+      avatar: 'http://127.0.0.1:5000/files/avatar.png',
       cpf: '00000000000',
       phone: '00000000000',
     })

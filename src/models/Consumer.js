@@ -32,6 +32,10 @@ class Consumer extends Model {
         },
         password: {
           type: DataTypes.STRING,
+          get() {
+            const value = this.getDataValue(Consumer.password);
+            return value;
+          },
           validate: {
             notEmpty: {
               msg: 'this field cannot be empty',
@@ -47,38 +51,20 @@ class Consumer extends Model {
           notEmpty: {
             msg: 'this field cannot be empty',
           },
-          min: 1,
-          max: 2,
         },
         avatar: {
           type: DataTypes.STRING,
           validate: {
-            notEmpty: {
-              msg: 'this field cannot be empty',
-            },
             isUrl: {
               msg: 'this is not a valid url',
             },
           },
-          defaultValue: 'https://i.imgur.com/L1RTiiC.png',
         },
         cpf: {
           type: DataTypes.STRING,
-          validate: {
-            notEmpty: {
-              msg: 'this field cannot be empty',
-            },
-          },
-          defaultValue: '000.000.000-00',
         },
         phone: {
           type: DataTypes.STRING,
-          validate: {
-            notEmpty: {
-              msg: 'this field cannot be empty',
-            },
-          },
-          defaultValue: '(00) 00000-0000',
         },
       },
       {
@@ -108,5 +94,9 @@ class Consumer extends Model {
     });
   }
 }
+
+Consumer.prototype.validatePassword = (password) => {
+  return bcrypt.compareSync(password, this.password);
+};
 
 module.exports = Consumer;

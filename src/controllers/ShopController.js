@@ -7,28 +7,13 @@ dotenv.config();
 const { KEY_API_TOMTOM } = process.env;
 
 class ShopController {
-  async login(req, res) {
-    const { email, password } = req.body;
-
-    console.log(password);
-
-    await Shop.findOne({ where: { email } }).then((shop) => {
-      if (shop.validPassword(password)) {
-        return res.status(200).json({ success: true, shop });
-      }
-
-      return res
-        .status(400)
-        .json({ success: false, message: 'password invalid' });
-    });
-  }
-
   async getById(req, res) {
     const { id } = req.headers;
 
     try {
       const shop = await Shop.findByPk(id, {
         attributes: { exclude: ['password'] },
+        include: [{ association: 'products' }],
       });
 
       return res.status(200).json({ success: true, shop });

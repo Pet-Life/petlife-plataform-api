@@ -46,13 +46,12 @@ class ConsumerController {
       email,
       password,
       permissionLevel: 1,
-      avatar: 'http://127.0.0.1:5000/files/avatar.png',
-      cpf: '00000000000',
-      phone: '00000000000',
+      avatar: 'http://127.0.0.1:5000/files/avatar-consumer.png',
+      cpf: '000.000.000-00',
+      phone: '(00)00000-0000',
     })
       .then((consumer) => {
         consumer.password = undefined;
-
         return res.json({
           success: true,
           message: 'created new user consumer',

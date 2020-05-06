@@ -32,17 +32,13 @@ class Consumer extends Model {
         },
         password: {
           type: DataTypes.STRING,
-          get() {
-            const value = this.getDataValue(Consumer.password);
-            return value;
-          },
           validate: {
-            notEmpty: {
-              msg: 'this field cannot be empty',
-            },
             len: {
               arg: [8, 16],
               msg: 'the field must be 8 to 16 characters',
+            },
+            notEmpty: {
+              msg: 'this field cannot be empty',
             },
           },
         },
@@ -94,9 +90,5 @@ class Consumer extends Model {
     });
   }
 }
-
-Consumer.prototype.validatePassword = (password) => {
-  return bcrypt.compareSync(password, this.password);
-};
 
 module.exports = Consumer;

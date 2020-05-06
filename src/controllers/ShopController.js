@@ -33,17 +33,6 @@ class ShopController {
 
     const [{ address, position }] = response.data.results;
 
-    console.log(
-      address.streetName,
-
-      address.municipalitySubdivision,
-      address.municipality,
-      address.countrySubdivision,
-      zipcode,
-      position.lat,
-      position.lon
-    );
-
     const point = { type: 'Point', coordinates: [position.lat, position.lon] };
 
     await Shop.create({
@@ -53,10 +42,10 @@ class ShopController {
       password,
       zipcode,
       permissionLevel: 2,
-      avatar: 'https://i.imgur.com/L1RTiiC.png',
-      phone: '(00) 0000-0000',
-      deliveryType: [' '],
-      businessHours: [' '],
+      avatar: 'http://127.0.0.1:5000/files/shop-logo.png',
+      phone: '(00)0000-0000',
+      deliveryType: [null],
+      businessHours: [null],
       street: address.streetName,
       district: address.municipalitySubdivision,
       city: address.municipality,

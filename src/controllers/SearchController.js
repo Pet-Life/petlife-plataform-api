@@ -66,13 +66,13 @@ class SearchController {
           Sequelize.col('coordinates')
         ),
         '<=',
-        10000
+        20000
       ),
     });
 
     return res
       .status(200)
-      .json({ success: true, message: 'list of shops', shops });
+      .json({ success: true, message: 'list of shops', address, shops });
   }
 }
 

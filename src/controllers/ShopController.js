@@ -46,7 +46,7 @@ class ShopController {
   }
 
   async getById(req, res) {
-    const { id } = req.headers;
+    const { id } = req.params;
 
     try {
       const shop = await Shop.findByPk(id, {
@@ -80,7 +80,7 @@ class ShopController {
       password,
       zipcode,
       permissionLevel: 2,
-      avatar: 'http://127.0.0.1:5000/files/shop-logo.png',
+      avatar: 'http://127.0.0.1:5000/files/logo.png',
       phone: '(00)0000-0000',
       deliveryType: [null],
       businessHours: [null],

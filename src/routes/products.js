@@ -7,6 +7,7 @@ const router = express.Router();
 const upload = multer(uploadConfig);
 
 router.get('/products', ProductController.getAll);
+router.get('/products/:id', ProductController.getById);
 router.post('/products', upload.single('photo'), ProductController.create);
 
 module.exports = router;

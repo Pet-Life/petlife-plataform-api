@@ -3,7 +3,11 @@ const Shop = require('../models/Shop');
 
 class ProductController {
   async getAll(req, res) {
+    const { id } = req.body;
     const products = await Product.findAll({
+      where: {
+        shopId: id,
+      },
       include: [
         { association: 'categories' },
         { association: 'shops', attributes: { exclude: ['password'] } },
@@ -13,6 +17,22 @@ class ProductController {
     return res
       .status(200)
       .json({ success: true, message: 'list of products', products });
+  }
+
+  async getById(req, res) {
+    const { id } = req.params;
+
+    const product = await Product.findByPk(id);
+
+    if (!product) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'product not found' });
+    }
+
+    return res
+      .status(200)
+      .json({ success: true, message: 'product found', product });
   }
 
   async create(req, res) {

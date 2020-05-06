@@ -10,7 +10,7 @@ router.get('/users/consumers/:id', ConumerController.getById);
 router.post('/users/consumers/auth/login', ConumerController.login);
 
 // endpoints shops
-router.get('/users/shops/', ShopController.getById);
+router.get('/users/shops/:id', ShopController.getById);
 router.post('/users/shops/signup', ShopController.create);
 router.post('/users/shops/auth/login', ShopController.login);
 

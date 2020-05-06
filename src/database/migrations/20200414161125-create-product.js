@@ -14,6 +14,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      description: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       manufacturer: {
         allowNull: false,
         type: Sequelize.STRING,

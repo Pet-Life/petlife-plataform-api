@@ -19,6 +19,7 @@ class ProductController {
     const { filename } = req.file;
     const {
       name,
+      description,
       manufacturer,
       unityPrice,
       quantity,
@@ -39,6 +40,7 @@ class ProductController {
       {
         photo: filename,
         name,
+        description,
         manufacturer,
         unityPrice,
         quantity,

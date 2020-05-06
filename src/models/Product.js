@@ -19,6 +19,14 @@ class Product extends Model {
             },
           },
         },
+        description: {
+          type: DataTypes.STRING,
+          validate: {
+            notEmpty: {
+              msg: 'this field cannot be empty',
+            },
+          },
+        },
         manufacturer: {
           type: DataTypes.STRING,
           validate: {

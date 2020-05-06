@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 const Shop = require('../models/Shop');
 const apiTomTom = require('../services/tomtom/api');
 
@@ -7,6 +8,43 @@ dotenv.config();
 const { KEY_API_TOMTOM } = process.env;
 
 class ShopController {
+  async login(req, res) {
+    const { email, password } = req.body;
+
+    try {
+      if (!email || !password) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'fields cannot be empty' });
+      }
+
+      const shop = await Shop.findOne({ where: { email } });
+
+      if (!shop) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'shop not found' });
+      }
+
+      if (await bcrypt.compareSync(password, shop.password)) {
+        return res.status(200).json({
+          success: true,
+          message: 'login successfully',
+          shopId: shop.id,
+          permissionLevel: shop.permissionLevel,
+        });
+      }
+
+      return res
+        .status(400)
+        .json({ success: false, message: 'password invalid' });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, message: 'error when signing in' });
+    }
+  }
+
   async getById(req, res) {
     const { id } = req.headers;
 

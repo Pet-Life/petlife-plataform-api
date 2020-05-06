@@ -1,22 +1,41 @@
+const bcrypt = require('bcrypt');
 const Consumer = require('../models/Consumer');
 
 class ConsumerController {
-  async getAll(req, res) {
-    await Consumer.findAll({ attributes: { exclude: ['password'] } })
-      .then((consumer) => {
+  async login(req, res) {
+    const { email, password } = req.body;
+
+    try {
+      if (!email || !password) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'fields cannot be empty' });
+      }
+
+      const consumer = await Consumer.findOne({ where: { email } });
+
+      if (!consumer) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'consumer not found' });
+      }
+
+      if (await bcrypt.compareSync(password, consumer.password)) {
         return res.status(200).json({
           success: true,
-          message: 'list of all consumers',
-          consumers: consumer,
+          message: 'login successfully',
+          consumerId: consumer.id,
         });
-      })
-      .catch((err) => {
-        return res.status(500).json({
-          success: false,
-          message: 'error loading consumers',
-          error: err,
-        });
-      });
+      }
+
+      return res
+        .status(400)
+        .json({ success: false, message: 'password invalid' });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, message: 'error when signing in' });
+    }
   }
 
   async getById(req, res) {

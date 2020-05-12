@@ -80,6 +80,28 @@ class ProductController {
       .status(201)
       .json({ success: true, message: 'create new product', product });
   }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const product = await Product.findByPk(id);
+
+      if (!product) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'product not found' });
+      }
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'product successfully deleted' });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, message: 'error deleting product', err });
+    }
+  }
 }
 
 module.exports = new ProductController();

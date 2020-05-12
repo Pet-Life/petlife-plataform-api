@@ -66,6 +66,59 @@ class CategoryController {
         });
       });
   }
+
+  async update(req, res) {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    try {
+      const category = await Category.findByPk(id);
+
+      if (!category) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'category not found' });
+      }
+
+      await category.update({ name }, { where: { id: category.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'updated category', category });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'error updating category',
+        error: err,
+      });
+    }
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const category = await Category.findByPk(id);
+
+      if (!category) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'category not found' });
+      }
+
+      await Category.destroy({ where: { id: category.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'category deleting successfully' });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'error deleting category',
+        error: err,
+      });
+    }
+  }
 }
 
 module.exports = new CategoryController();

@@ -81,6 +81,36 @@ class ProductController {
       .json({ success: true, message: 'create new product', product });
   }
 
+  async update(req, res) {
+    const { id } = req.params;
+    const { newQuantity } = req.body;
+
+    try {
+      const product = await Product.findByPk(id);
+
+      if (!product) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'product not found' });
+      }
+
+      await product.update(
+        { quantity: newQuantity },
+        { where: { id: product.id } }
+      );
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'updated product', product });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'error updating product',
+        error: err,
+      });
+    }
+  }
+
   async delete(req, res) {
     const { id } = req.params;
 
@@ -92,6 +122,8 @@ class ProductController {
           .status(400)
           .json({ success: false, message: 'product not found' });
       }
+
+      await Product.destroy({ where: { id: product.id } });
 
       return res
         .status(200)

@@ -93,6 +93,33 @@ class PaymentController {
       });
   }
 
+  async update(req, res) {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    try {
+      const payment = await Payment.findByPk(id);
+
+      if (!payment) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'payment not found' });
+      }
+
+      await payment.update({ name }, { where: { id: payment.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'updated payment', payment });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'error updating payment',
+        error: err,
+      });
+    }
+  }
+
   async delete(req, res) {
     const { id } = req.params;
 

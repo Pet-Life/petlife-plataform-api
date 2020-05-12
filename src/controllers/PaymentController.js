@@ -92,6 +92,32 @@ class PaymentController {
         });
       });
   }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const payment = await Payment.findByPk(id);
+
+      if (!payment) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'payment not found' });
+      }
+
+      await Payment.destroy({ where: { id: payment.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'payment successfully deleted' });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'error deleting payment',
+        error: err,
+      });
+    }
+  }
 }
 
 module.exports = new PaymentController();

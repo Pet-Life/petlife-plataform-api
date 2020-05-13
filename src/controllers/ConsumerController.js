@@ -1,5 +1,11 @@
+const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Consumer = require('../models/Consumer');
+
+dotenv.config();
+
+const { SECRET } = process.env;
 
 class ConsumerController {
   async login(req, res) {
@@ -21,10 +27,17 @@ class ConsumerController {
       }
 
       if (await bcrypt.compareSync(password, consumer.password)) {
+        const token = jwt.sign(
+          { id: consumer.id, permissionLevel: consumer.permissionLevel },
+          SECRET,
+          {
+            expiresIn: 3600,
+          }
+        );
         return res.status(200).json({
           success: true,
           message: 'login successfully',
-          consumerId: consumer.id,
+          token,
         });
       }
 

@@ -80,6 +80,32 @@ class AddressController {
       });
     }
   }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const address = await Address.findByPk(id);
+
+      if (!address) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'address not found' });
+      }
+
+      await Address.destroy({ where: { id: address.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'address successfully deleted' });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'error deleting address',
+        error: err,
+      });
+    }
+  }
 }
 
 module.exports = new AddressController();

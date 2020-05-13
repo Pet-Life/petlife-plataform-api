@@ -34,7 +34,7 @@ module.exports = (req, res, next) => {
       return res.status(401).json({ success: false, message: 'token invalid' });
     }
 
-    req.id = decoded.id;
+    req.user = decoded.user;
     return next();
   });
 };

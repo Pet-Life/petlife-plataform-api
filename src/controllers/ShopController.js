@@ -1,11 +1,12 @@
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Shop = require('../models/Shop');
 const apiTomTom = require('../services/tomtom/api');
 
 dotenv.config();
 
-const { KEY_API_TOMTOM } = process.env;
+const { SECRET, KEY_API_TOMTOM } = process.env;
 
 class ShopController {
   async login(req, res) {
@@ -27,11 +28,15 @@ class ShopController {
       }
 
       if (await bcrypt.compareSync(password, shop.password)) {
+        const token = jwt.sign(
+          { id: shop.id, permissionLevel: shop.permissionLevel },
+          SECRET,
+          { expiresIn: 3600 }
+        );
         return res.status(200).json({
           success: true,
           message: 'login successfully',
-          shopId: shop.id,
-          permissionLevel: shop.permissionLevel,
+          token,
         });
       }
 

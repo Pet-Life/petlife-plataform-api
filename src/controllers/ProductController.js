@@ -46,11 +46,11 @@ class ProductController {
       categoryId,
       status,
     } = req.body;
-    const permission = req.user.permissionLevel;
+    const { id } = req.user;
 
-    console.log(permission);
+    console.log(id);
 
-    const shop = await Shop.findByPk(1);
+    const shop = await Shop.findByPk(id);
 
     if (!shop) {
       return res
@@ -68,7 +68,7 @@ class ProductController {
         quantity,
         categoryId,
         status,
-        shopId: 1,
+        shopId: id,
       },
       {
         include: [

@@ -83,6 +83,30 @@ class SaleController {
       .status(201)
       .json({ success: true, message: 'create new sale', sale });
   }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const sale = await Sale.findByPk(id);
+
+      if (!sale) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'sale not found' });
+      }
+
+      await Sale.destroy({ where: { id: sale.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'sale successfully deleted' });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, message: 'error deleting sale', error: err });
+    }
+  }
 }
 
 module.exports = new SaleController();

@@ -28,11 +28,7 @@ class ShopController {
       }
 
       if (await bcrypt.compareSync(password, shop.password)) {
-        const token = jwt.sign(
-          { id: shop.id, permissionLevel: shop.permissionLevel },
-          SECRET,
-          { expiresIn: 3600 }
-        );
+        const token = jwt.sign({ user: shop }, SECRET, { expiresIn: 3600 });
         return res.status(200).json({
           success: true,
           message: 'login successfully',

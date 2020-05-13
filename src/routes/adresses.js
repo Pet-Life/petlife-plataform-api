@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/consumers/:id/adresses', AddressController.getById);
 router.post('/consumers/:id/adresses', AddressController.create);
-router.delete('/consumers/addresses/:id', AddressController.delete);
+router.delete('/consumers/adresses/:id', AddressController.delete);
 
 module.exports = router;

@@ -8,7 +8,7 @@ class Product extends Model {
           type: DataTypes.STRING,
           get() {
             const name = this.getDataValue('photo');
-            return `http://127.0.0.1:5000/files/${name}`;
+            return `http://192.168.0.19:5000/files/${name}`;
           },
         },
         name: {

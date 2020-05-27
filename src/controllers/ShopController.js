@@ -32,6 +32,7 @@ class ShopController {
         return res.status(200).json({
           success: true,
           message: 'login successfully',
+          shop,
           token,
         });
       }

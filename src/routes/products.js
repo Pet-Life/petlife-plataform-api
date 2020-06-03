@@ -15,7 +15,12 @@ router.post(
   upload.single('photo'),
   ProductController.create
 );
-router.patch('/products/:id', auth, ProductController.update);
+router.patch(
+  '/products/:id',
+  auth,
+  upload.single('photo'),
+  ProductController.update
+);
 router.delete('/products/:id', auth, ProductController.delete);
 
 module.exports = router;

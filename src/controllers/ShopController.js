@@ -69,7 +69,7 @@ class ShopController {
   }
 
   async create(req, res) {
-    const { name, cnpj, zipcode, email, password } = req.body;
+    const { name, cnpj, zipcode, number, email, password } = req.body;
 
     const response = await apiTomTom.get(
       `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&extendedPostalCodesFor=PAD&key=${KEY_API_TOMTOM}`
@@ -91,6 +91,7 @@ class ShopController {
       deliveryType: ['entrega'],
       businessHours: ['Segunda a Sexta das 09:00h às 18:00h'],
       street: address.streetName,
+      number,
       district: address.municipalitySubdivision,
       city: address.municipality,
       state: address.countrySubdivision,

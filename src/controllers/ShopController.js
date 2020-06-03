@@ -19,7 +19,10 @@ class ShopController {
           .json({ success: false, message: 'fields cannot be empty' });
       }
 
-      const shop = await Shop.findOne({ where: { email } });
+      const shop = await Shop.findOne({
+        where: { email },
+        include: [{ association: 'products' }],
+      });
 
       if (!shop) {
         return res
@@ -29,6 +32,7 @@ class ShopController {
 
       if (await bcrypt.compareSync(password, shop.password)) {
         const token = jwt.sign({ user: shop }, SECRET, { expiresIn: 3600 });
+        shop.password = undefined;
         return res.status(200).json({
           success: true,
           message: 'login successfully',

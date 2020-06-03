@@ -48,8 +48,6 @@ class ProductController {
     } = req.body;
     const { id } = req.user;
 
-    console.log(id);
-
     const shop = await Shop.findByPk(id);
 
     if (!shop) {
@@ -85,7 +83,15 @@ class ProductController {
 
   async update(req, res) {
     const { id } = req.params;
-    const { newQuantity } = req.body;
+    const { filename } = req.file;
+    const {
+      name,
+      description,
+      manufacturer,
+      unityPrice,
+      quantity,
+      categoryId,
+    } = req.body;
 
     try {
       const product = await Product.findByPk(id);
@@ -97,7 +103,15 @@ class ProductController {
       }
 
       await product.update(
-        { quantity: newQuantity },
+        {
+          photo: filename,
+          name,
+          description,
+          manufacturer,
+          unityPrice,
+          quantity,
+          categoryId,
+        },
         { where: { id: product.id } }
       );
 

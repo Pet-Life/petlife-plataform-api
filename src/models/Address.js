@@ -69,7 +69,6 @@ class Address extends Model {
   static associate(models) {
     Address.belongsTo(models.consumer, {
       foreignKey: 'consumerId',
-      as: 'adresses',
     });
   }
 }

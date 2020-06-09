@@ -114,6 +114,69 @@ class ShopController {
         });
       });
   }
+
+  async update(req, res) {
+    const { id } = req.params;
+    const { filename } = req.file;
+    const {
+      name,
+      email,
+      cnpj,
+      zipcode,
+      number,
+      phone,
+      deliveryType,
+      businessHours,
+    } = req.body;
+
+    const response = await apiTomTom.get(
+      `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&extendedPostalCodesFor=PAD&key=${KEY_API_TOMTOM}`
+    );
+
+    const [{ address, position }] = response.data.results;
+
+    const point = { type: 'Point', coordinates: [position.lat, position.lon] };
+
+    try {
+      const shop = await Shop.findByPk(id);
+
+      if (!shop) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'shop not found' });
+      }
+
+      await Shop.update(
+        {
+          avatar: filename,
+          name,
+          email,
+          cnpj,
+          phone,
+          deliveryType,
+          businessHours,
+          street: address.streetName,
+          number,
+          district: address.municipalitySubdivision,
+          city: address.municipality,
+          state: address.countrySubdivision,
+          coordinates: point,
+          status: 'ativo',
+        },
+        { where: { id: shop.id } }
+      );
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'updated shop', shop });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'error updating shop',
+        error: err,
+      });
+    }
+  }
 }
 
 module.exports = new ShopController();

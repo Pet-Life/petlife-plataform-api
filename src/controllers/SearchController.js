@@ -55,19 +55,21 @@ class SearchController {
         ],
       },
       include: [{ association: 'products' }],
-      where: Sequelize.where(
-        Sequelize.fn(
-          'ST_DistanceSphere',
+      where: [
+        Sequelize.where(
           Sequelize.fn(
-            'ST_MakePoint',
-            address.coordinates.latitude,
-            address.coordinates.longitude
+            'ST_DistanceSphere',
+            Sequelize.fn(
+              'ST_MakePoint',
+              address.coordinates.latitude,
+              address.coordinates.longitude
+            ),
+            Sequelize.col('coordinates')
           ),
-          Sequelize.col('coordinates')
+          '<=',
+          20000
         ),
-        '<=',
-        20000
-      ),
+      ],
     });
 
     return res

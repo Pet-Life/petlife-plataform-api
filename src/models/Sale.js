@@ -4,12 +4,18 @@ class Sale extends Model {
   static init(sequelize) {
     super.init(
       {
-        priceTotal: {
-          type: DataTypes.REAL,
+        products: {
+          type: DataTypes.ARRAY(DataTypes.TEXT),
           validate: {
             notEmpty: {
               msg: 'this field cannot be empty',
             },
+          },
+        },
+        priceTotal: {
+          type: DataTypes.REAL,
+          notEmpty: {
+            msg: 'this field cannot be empty',
           },
         },
       },
@@ -21,13 +27,11 @@ class Sale extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.product, { foreignKey: 'productId', as: 'products' });
     this.belongsTo(models.consumer, {
-      foreignKey: 'consumerId',
-      as: 'consumers',
+      foreignKey: 'idConsumer',
+      as: 'salesConsumer',
     });
-    this.belongsTo(models.shop, { foreignKey: 'shopId', as: 'shops' });
-    this.belongsTo(models.payment, { foreignKey: 'paymentId', as: 'payments' });
+    this.belongsTo(models.shop, { foreignKey: 'idShop', as: 'salesShop' });
   }
 }
 

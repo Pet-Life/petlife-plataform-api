@@ -7,21 +7,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      productId: {
+      products: {
         allowNull: false,
-        references: {
-          model: 'products',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        type: Sequelize.INTEGER,
+        type: Sequelize.ARRAY(Sequelize.TEXT),
       },
       priceTotal: {
         allowNull: false,
         type: Sequelize.REAL,
       },
-      shopId: {
+      idShop: {
         allowNull: false,
         references: {
           model: 'shops',
@@ -31,20 +25,9 @@ module.exports = {
         onDelete: 'CASCADE',
         type: Sequelize.INTEGER,
       },
-      consumerId: {
-        allowNull: false,
+      idConsumer: {
         references: {
           model: 'consumers',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        type: Sequelize.INTEGER,
-      },
-      paymentId: {
-        allowNull: false,
-        references: {
-          model: 'payments',
           key: 'id',
         },
         onUpdate: 'CASCADE',

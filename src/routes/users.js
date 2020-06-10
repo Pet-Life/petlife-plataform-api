@@ -18,9 +18,9 @@ router.get('/users/shops/:id', ShopController.getById);
 router.post('/users/shops/signup', ShopController.create);
 router.post('/users/shops/auth/login', ShopController.login);
 router.patch(
-  '/products/:id',
+  '/users/shops/:id',
   auth,
-  upload.single('photo'),
+  upload.single('avatar'),
   ShopController.update
 );
 

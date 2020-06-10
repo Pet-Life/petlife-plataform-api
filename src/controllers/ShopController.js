@@ -45,6 +45,7 @@ class ShopController {
         .status(400)
         .json({ success: false, message: 'password invalid' });
     } catch (err) {
+      console.log(err);
       return res
         .status(500)
         .json({ success: false, message: 'error when signing in' });
@@ -125,8 +126,8 @@ class ShopController {
       zipcode,
       number,
       phone,
-      deliveryType,
-      businessHours,
+      deliverys,
+      business,
     } = req.body;
 
     const response = await apiTomTom.get(
@@ -153,8 +154,8 @@ class ShopController {
           email,
           cnpj,
           phone,
-          deliveryType,
-          businessHours,
+          deliveryType: deliverys.split(',').map((delivery) => delivery.trim()),
+          businessHours: business.split(',').map((busines) => busines.trim()),
           street: address.streetName,
           number,
           district: address.municipalitySubdivision,

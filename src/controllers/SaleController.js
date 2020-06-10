@@ -1,87 +1,39 @@
 const Sale = require('../models/Sale');
-const Product = require('../models/Product');
-const Payment = require('../models/Payment');
-const Shop = require('../models/Shop');
-const Consumer = require('../models/Consumer');
 
 class SaleController {
   async getAll(req, res) {
-    const sale = await Sale.findAll({
-      attributes: {
-        exclude: ['productId', 'shopId', 'consumerId', 'paymentId'],
-      },
+    const sales = await Sale.findAll({
       include: [
-        { association: 'products' },
-        { association: 'shops', attributes: { exclude: ['password'] } },
-        { association: 'consumers', attributes: { exclude: ['password'] } },
-        { association: 'payments' },
+        { association: 'salesShop', attributes: { exclude: ['password'] } },
+        { association: 'salesConsumer', attributes: { exclude: ['password'] } },
       ],
     });
 
-    try {
-      if (!sale) {
-        return res
-          .status(400)
-          .json({ success: false, error: 'error loading sales' });
-      }
-
-      return res
-        .status(200)
-        .json({ success: true, message: 'list of sales', sales: sale });
-    } catch (err) {
-      return res.status({
-        success: false,
-        message: 'error loading sales',
-        error: err,
-      });
-    }
+    return res
+      .status(200)
+      .json({ success: true, message: 'list of products', sales });
   }
 
   async create(req, res) {
-    const { productId, priceTotal, shopId, paymentId } = req.body;
-    const { id } = req.headers;
+    const { id } = req.params;
+    const { products, priceTotal, idConsumer } = req.body;
 
-    const product = await Product.findByPk(productId);
+    try {
+      const sale = await Sale.create({
+        products,
+        priceTotal,
+        idShop: id,
+        idConsumer,
+      });
 
-    if (!product) {
       return res
-        .status(400)
-        .json({ success: false, error: 'product not found' });
-    }
-
-    const shop = await Shop.findByPk(shopId);
-
-    if (!shop) {
-      return res.status(400).json({ success: false, error: 'shop not found' });
-    }
-
-    const payment = await Payment.findByPk(paymentId);
-
-    if (!payment) {
+        .status(201)
+        .json({ success: true, message: 'created new sale', sale });
+    } catch (err) {
       return res
-        .status(400)
-        .json({ success: false, error: 'type payment not found' });
+        .status(500)
+        .json({ success: false, message: 'error create new sale', err });
     }
-
-    const consumer = await Consumer.findByPk(id);
-
-    if (!consumer) {
-      return res
-        .status(400)
-        .json({ success: false, error: 'consumer not found' });
-    }
-
-    const sale = await Sale.create({
-      productId: product.id,
-      priceTotal,
-      shopId: shop.id,
-      consumerId: consumer.id,
-      paymentId: payment.id,
-    });
-
-    return res
-      .status(201)
-      .json({ success: true, message: 'create new sale', sale });
   }
 
   async delete(req, res) {
@@ -104,7 +56,7 @@ class SaleController {
     } catch (err) {
       return res
         .status(500)
-        .json({ success: false, message: 'error deleting sale', error: err });
+        .json({ success: false, message: 'error deleting sale', err });
     }
   }
 }

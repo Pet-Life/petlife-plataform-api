@@ -12,6 +12,12 @@ const upload = multer(uploadConfig);
 router.post('/users/consumers/signup', ConumerController.create);
 router.get('/users/consumers/:id', ConumerController.getById);
 router.post('/users/consumers/auth/login', ConumerController.login);
+router.patch(
+  '/users/consumer/:id',
+  auth,
+  upload.single('avatar'),
+  ConumerController.update
+);
 
 // endpoints shops
 router.get('/users/shops/:id', ShopController.getById);

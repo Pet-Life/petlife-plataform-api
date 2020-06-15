@@ -121,6 +121,45 @@ class ConsumerController {
         });
       });
   }
+
+  async update(req, res) {
+    const { id } = req.params;
+    const { filename } = req.file;
+    const { firstName, lastName, email, cpf, phone } = req.body;
+
+    try {
+      const consumer = await Consumer.findByPk(id);
+
+      if (!consumer) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'consumer not found' });
+      }
+
+      await Consumer.update(
+        {
+          avatar: filename,
+          firstName,
+          lastName,
+          email,
+          cpf,
+          phone,
+        },
+        { where: { id: consumer.id } }
+      );
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'updated conumser', consumer });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        success: false,
+        message: 'error updating consumer',
+        error: err,
+      });
+    }
+  }
 }
 
 module.exports = new ConsumerController();

@@ -65,7 +65,7 @@ class Shop extends Model {
           type: DataTypes.STRING,
         },
         deliveryType: {
-          type: DataTypes.ARRAY(DataTypes.STRING),
+          type: DataTypes.STRING,
         },
         businessHours: {
           type: DataTypes.ARRAY(DataTypes.TEXT),

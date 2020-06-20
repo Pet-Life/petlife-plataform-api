@@ -61,6 +61,12 @@ class ShopController {
         include: [{ association: 'products' }],
       });
 
+      if (!shop) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'shop not found' });
+      }
+
       return res.status(200).json({ success: true, shop });
     } catch (err) {
       return res
@@ -89,7 +95,7 @@ class ShopController {
       permissionLevel: 2,
       avatar: 'http://127.0.0.1:5000/files/logo.png',
       phone: '(00)0000-0000',
-      deliveryType: ['entrega'],
+      deliveryType: 'entrega',
       businessHours: ['Segunda a Sexta das 09:00h às 18:00h'],
       street: address.streetName,
       number,
@@ -126,7 +132,7 @@ class ShopController {
       zipcode,
       number,
       phone,
-      deliverys,
+      delivery,
       business,
     } = req.body;
 
@@ -154,7 +160,7 @@ class ShopController {
           email,
           cnpj,
           phone,
-          deliveryType: deliverys.split(',').map((delivery) => delivery.trim()),
+          deliveryType: delivery,
           businessHours: business.split(',').map((busines) => busines.trim()),
           street: address.streetName,
           number,
@@ -176,6 +182,30 @@ class ShopController {
         message: 'error updating shop',
         error: err,
       });
+    }
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const shop = await Shop.findByPk(id);
+
+      if (!shop) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'shop not found' });
+      }
+
+      await Shop.destroy({ where: { id: shop.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'shop successfully deleted' });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, message: 'error deleting product', err });
     }
   }
 }

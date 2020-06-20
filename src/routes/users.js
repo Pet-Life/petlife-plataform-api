@@ -18,6 +18,7 @@ router.patch(
   upload.single('avatar'),
   ConumerController.update
 );
+router.delete('/users/consumers/:id', auth, ConumerController.delete);
 
 // endpoints shops
 router.get('/users/shops/:id', ShopController.getById);
@@ -29,5 +30,6 @@ router.patch(
   upload.single('avatar'),
   ShopController.update
 );
+router.delete('/users/shops/:id', auth, ShopController.delete);
 
 module.exports = router;

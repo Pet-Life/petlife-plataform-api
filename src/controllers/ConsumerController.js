@@ -68,7 +68,7 @@ class ConsumerController {
 
     return res
       .status(200)
-      .json({ success: true, message: 'consumer found', consumer });
+      .json({ success: true, message: 'successfully found', consumer });
   }
 
   async create(req, res) {
@@ -150,7 +150,7 @@ class ConsumerController {
 
       return res
         .status(200)
-        .json({ success: true, message: 'updated conumser', consumer });
+        .json({ success: true, message: 'updated consumer', consumer });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
@@ -158,6 +158,30 @@ class ConsumerController {
         message: 'error updating consumer',
         error: err,
       });
+    }
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const consumer = await Consumer.findByPk(id);
+
+      if (!consumer) {
+        return res
+          .status(400)
+          .json({ success: false, message: 'consumer not found' });
+      }
+
+      await Consumer.destroy({ where: { id: consumer.id } });
+
+      return res
+        .status(200)
+        .json({ success: true, message: 'consumer successfully deleted' });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, message: 'error deleting consumer', err });
     }
   }
 }

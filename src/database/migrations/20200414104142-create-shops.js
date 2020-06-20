@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       deliveryType: {
-        type: Sequelize.ARRAY(Sequelize.TEXT),
+        type: Sequelize.STRING,
       },
       businessHours: {
         type: Sequelize.ARRAY(Sequelize.TEXT),

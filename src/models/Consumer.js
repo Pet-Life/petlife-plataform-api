@@ -50,10 +50,6 @@ class Consumer extends Model {
         },
         avatar: {
           type: DataTypes.STRING,
-          get() {
-            const name = this.getDataValue('avatar');
-            return `http://127.0.0.1:5000/files/${name}`;
-          },
           validate: {
             isUrl: {
               msg: 'this is not a valid url',

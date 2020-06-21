@@ -4,6 +4,7 @@ const ConumerController = require('../controllers/ConsumerController');
 const ShopController = require('../controllers/ShopController');
 const uploadConfig = require('../config/upload');
 const auth = require('../middlewares/auth');
+const auth2 = require('../middlewares/auth2');
 
 const router = express.Router();
 const upload = multer(uploadConfig);
@@ -26,10 +27,10 @@ router.post('/users/shops/signup', ShopController.create);
 router.post('/users/shops/auth/login', ShopController.login);
 router.patch(
   '/users/shops/:id',
-  auth,
+  auth2,
   upload.single('avatar'),
   ShopController.update
 );
-router.delete('/users/shops/:id', auth, ShopController.delete);
+router.delete('/users/shops/:id', auth2, ShopController.delete);
 
 module.exports = router;

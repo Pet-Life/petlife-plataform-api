@@ -125,24 +125,7 @@ class ShopController {
   async update(req, res) {
     const { id } = req.params;
     const { filename } = req.file;
-    const {
-      name,
-      email,
-      cnpj,
-      zipcode,
-      number,
-      phone,
-      delivery,
-      business,
-    } = req.body;
-
-    const response = await apiTomTom.get(
-      `${zipcode}.json?limit=1&countrySet=BR&territory=BRA&language=pt-BR&extendedPostalCodesFor=PAD&key=${KEY_API_TOMTOM}`
-    );
-
-    const [{ address, position }] = response.data.results;
-
-    const point = { type: 'Point', coordinates: [position.lat, position.lon] };
+    const { name, email, cnpj, phone, delivery, business } = req.body;
 
     try {
       const shop = await Shop.findByPk(id);
@@ -162,13 +145,6 @@ class ShopController {
           phone,
           deliveryType: delivery,
           businessHours: business.split(',').map((busines) => busines.trim()),
-          street: address.streetName,
-          number,
-          district: address.municipalitySubdivision,
-          city: address.municipality,
-          state: address.countrySubdivision,
-          coordinates: point,
-          status: 'ativo',
         },
         { where: { id: shop.id } }
       );
